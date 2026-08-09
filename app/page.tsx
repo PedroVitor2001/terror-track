@@ -1,10 +1,14 @@
+import MovieList from "@/components/movie/MovieList";
 import Header from "@/components/ui/Header";
-import ThemeToggle from "@/components/ui/ThemeToggle";
+import { getHorrorMovies } from "@/lib/tmdb";
 
-export default function Home() {
+export default async function Home() {
+  const movies = await getHorrorMovies();
+
   return (
     <>
       <Header />
+      <MovieList movies={movies} />
     </>
   );
 }
