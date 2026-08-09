@@ -13,6 +13,7 @@ type MovieCardProps = {
   vote_average: number;
   favorite: boolean;
   onFavoriteToggle?: () => void;
+  onCardClick?: () => void;
 };
 
 export default function MovieCard({
@@ -22,12 +23,16 @@ export default function MovieCard({
   vote_average,
   favorite,
   onFavoriteToggle,
+  onCardClick,
 }: MovieCardProps) {
   const year = release_date.slice(0, 4);
   const scareRating = Math.round(vote_average / 2);
 
   return (
-    <div className="relative w-48 rounded-lg overflow-hidden bg-[#111] border border-[#2a2a2a] cursor-pointer">
+    <div
+      className="relative w-48 rounded-lg overflow-hidden bg-[#111] border border-[#2a2a2a] cursor-pointer"
+      onClick={onCardClick}
+    >
       {/* área da imagem */}
       <div className="relative h-64">
         <Image

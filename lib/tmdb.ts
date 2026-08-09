@@ -1,5 +1,5 @@
 const BASE_URL = "https://api.themoviedb.org/3";
-const TOKEN = process.env.TMDB_TOKEN;
+const TOKEN = process.env.NEXT_PUBLIC_TMDB_TOKEN;
 
 export type TMDBMovie = {
   id: number;
