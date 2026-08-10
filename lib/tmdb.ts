@@ -57,3 +57,16 @@ export async function getMovieDetails(id: number): Promise<TMDBMovieDetails> {
   );
   return response.json();
 }
+
+export async function searchHorrorMovies(query: string): Promise<TMDBMovie[]> {
+  const response = await fetch(
+    `${BASE_URL}/search/movie?query=${encodeURIComponent(query)}&with_genres=27&language=pt-BR`,
+    {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    },
+  );
+  const data = await response.json();
+  return data.results;
+}

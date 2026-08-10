@@ -1,9 +1,17 @@
 import MovieList from "@/components/movie/MovieList";
 import Header from "@/components/ui/Header";
-import { getHorrorMovies } from "@/lib/tmdb";
+import { getHorrorMovies, searchHorrorMovies } from "@/lib/tmdb";
 
-export default async function Home() {
-  const movies = await getHorrorMovies();
+type Props = {
+  searchParams: Promise<{ search?: string }>;
+};
+
+export default async function Home({ searchParams }: Props) {
+  const { search } = await searchParams;
+
+  const movies = search
+    ? await searchHorrorMovies(search)
+    : await getHorrorMovies();
 
   return (
     <>
