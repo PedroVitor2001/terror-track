@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Heart } from "lucide-react";
+import ScareBar from "./ScareBar";
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -69,13 +70,7 @@ export default function MovieCard({
             <span className="text-[#90D5FF] text-[10px] tracking-widest uppercase">
               Nível de medo
             </span>
-            <div className="flex gap-0.5">
-              {Array.from({ length: 5 }, (_, i) => (
-                <span key={i} className="text-sm">
-                  {i < scareRating ? "☠️" : "🩶"}
-                </span>
-              ))}
-            </div>
+            <ScareBar rating={scareRating} />
           </div>
 
           {/* botão favoritar */}
