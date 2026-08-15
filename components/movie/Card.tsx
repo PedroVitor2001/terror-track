@@ -80,7 +80,10 @@ export default function MovieCard({
 
           {/* botão favoritar */}
           <button
-            onClick={onFavoriteToggle}
+            onClick={(e) => {
+              e.stopPropagation();
+              onFavoriteToggle?.();
+            }}
             className="w-8 h-8 rounded-full border border-[#2a2a2a] flex items-center justify-center cursor-pointer hover:border-[#90D5FF] transition-colors"
           >
             <Heart
