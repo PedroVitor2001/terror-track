@@ -4,20 +4,15 @@ import { useState } from "react";
 import MovieCard from "./Card";
 import MovieModal from "./MovieModal";
 import type { TMDBMovie } from "@/lib/tmdb";
+import { useFavorites } from "@/lib/favorites-context";
 
 type MovieListProps = {
   movies: TMDBMovie[];
 };
 
 export default function MovieList({ movies }: MovieListProps) {
-  const [favorites, setFavorites] = useState<number[]>([]);
+  const { favorites, toggleFavorite } = useFavorites();
   const [selectedMovie, setSelectedMovie] = useState<TMDBMovie | null>(null);
-
-  function handleFavoriteToggle(id: number) {
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id],
-    );
-  }
 
   return (
     <>
@@ -31,7 +26,7 @@ export default function MovieList({ movies }: MovieListProps) {
             release_date={movie.release_date}
             vote_average={movie.vote_average}
             favorite={favorites.includes(movie.id)}
-            onFavoriteToggle={() => handleFavoriteToggle(movie.id)}
+            onFavoriteToggle={() => toggleFavorite(movie.id)}
             onCardClick={() => setSelectedMovie(movie)}
           />
         ))}

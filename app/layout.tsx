@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Cinzel } from "next/font/google";
 import "./globals.css";
 import Silk from "@/components/ui/Silk";
+import { FavoritesProvider } from "@/lib/favorites-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,7 +44,7 @@ export default function RootLayout({
             rotation={0}
           />
         </div>
-        {children}
+        <FavoritesProvider>{children}</FavoritesProvider>
       </body>
     </html>
   );
