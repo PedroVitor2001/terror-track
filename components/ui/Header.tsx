@@ -1,13 +1,44 @@
 "use client";
 
 import Image from "next/image";
-import { Heart } from "lucide-react";
+import { Heart, LogOut } from "lucide-react";
 import SearchInput from "./SearchInput";
 import ThemeToggle from "./ThemeToggle";
 import { useFavorites } from "@/lib/favorites-context";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import type { User } from "@supabase/supabase-js";
 
 export default function Header() {
   const { favorites } = useFavorites();
+  const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
+  const supabase = createClient();
+
+  useEffect(() => {
+    // pega o usuário atual
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+
+    // escuta mudanças de sessão (login/logout)
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    router.push("/");
+    router.refresh();
+  }
+
+  const initials = user?.email?.slice(0, 2).toUpperCase() ?? null;
 
   return (
     <header className="flex items-center justify-between p-4">
@@ -28,7 +59,30 @@ export default function Header() {
             </span>
           )}
         </div>
+
         <ThemeToggle />
+
+        {/* avatar ou botão de login */}
+        {user ? (
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-[#0a0a0d] text-xs font-bold">
+              {initials}
+            </div>
+            <button
+              onClick={handleLogout}
+              className="cursor-pointer text-[#90D5FF] hover:text-[#E0F3FF] transition-colors"
+            >
+              <LogOut size={16} />
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => router.push("/login")}
+            className="text-xs text-[#90D5FF] border border-white/20 rounded-lg px-3 py-1.5 hover:border-blue-300 transition-colors cursor-pointer"
+          >
+            Entrar
+          </button>
+        )}
       </div>
     </header>
   );
