@@ -6,6 +6,7 @@ import { X, Clock, Star } from "lucide-react";
 import { getMovieDetails } from "@/lib/tmdb";
 import type { TMDBMovie, TMDBMovieDetails } from "@/lib/tmdb";
 import MovieModalSkeleton from "./MovieModalSkeleton";
+import GenreTag from "../ui/GenreTag";
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
 
@@ -90,14 +91,9 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
                 {details && (
                   <div className="flex flex-wrap gap-1 mt-1">
                     {details.genres.map((genre) => (
-                      <span
-                        key={genre.id}
-                        className="text-[10px] px-2 py-0.5 rounded-full border border-[#3a3028] text-[#90D5FF]"
-                      >
-                        {genre.name}
-                      </span>
+                      <GenreTag key={genre.id} name={genre.name} />
                     ))}
-                  </div>
+                  </div>  
                 )}
               </div>
             </div>
