@@ -32,16 +32,19 @@ export type TMDBMovieDetails = {
   };
 };
 
-export async function getHorrorMovies(page = 1): Promise<TMDBMovie[]> {
+export async function getHorrorMovies(
+  page = 1,
+  generos = "27",
+  ordem = "popularity.desc",
+): Promise<TMDBMovie[]> {
   const response = await fetch(
-    `${BASE_URL}/discover/movie?with_genres=27&language=pt-BR&sort_by=popularity.desc&page=${page}`,
+    `${BASE_URL}/discover/movie?with_genres=${generos}&language=pt-BR&sort_by=${ordem}&page=${page}`,
     {
       headers: {
         Authorization: `Bearer ${TOKEN}`,
       },
     },
   );
-
   const data = await response.json();
   return data.results;
 }
