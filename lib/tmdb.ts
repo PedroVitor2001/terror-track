@@ -32,9 +32,9 @@ export type TMDBMovieDetails = {
   };
 };
 
-export async function getHorrorMovies(): Promise<TMDBMovie[]> {
+export async function getHorrorMovies(page = 1): Promise<TMDBMovie[]> {
   const response = await fetch(
-    `${BASE_URL}/discover/movie?with_genres=27&language=pt-BR&sort_by=popularity.desc`,
+    `${BASE_URL}/discover/movie?with_genres=27&language=pt-BR&sort_by=popularity.desc&page=${page}`,
     {
       headers: {
         Authorization: `Bearer ${TOKEN}`,
@@ -58,9 +58,12 @@ export async function getMovieDetails(id: number): Promise<TMDBMovieDetails> {
   return response.json();
 }
 
-export async function searchHorrorMovies(query: string): Promise<TMDBMovie[]> {
+export async function searchHorrorMovies(
+  query: string,
+  page = 1,
+): Promise<TMDBMovie[]> {
   const response = await fetch(
-    `${BASE_URL}/search/movie?query=${encodeURIComponent(query)}&with_genres=27&language=pt-BR`,
+    `${BASE_URL}/search/movie?query=${encodeURIComponent(query)}&with_genres=27&language=pt-BR&page=${page}`,
     {
       headers: {
         Authorization: `Bearer ${TOKEN}`,
