@@ -70,3 +70,13 @@ export async function searchHorrorMovies(query: string): Promise<TMDBMovie[]> {
   const data = await response.json();
   return data.results;
 }
+
+export async function getMovieById(id: number): Promise<TMDBMovie> {
+  const response = await fetch(`${BASE_URL}/movie/${id}?language=pt-BR`, {
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+}
