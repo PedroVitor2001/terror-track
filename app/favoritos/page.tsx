@@ -56,7 +56,7 @@ export default async function FavoritosPage() {
           </Link>
         </div>
       ) : (
-        <MovieList movies={movies} />
+        <MovieList movies={movies} showFavoriteButton={false} />
       )}
     </div>
   );

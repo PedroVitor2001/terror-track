@@ -13,6 +13,7 @@ type MovieCardProps = {
   release_date: string;
   vote_average: number;
   favorite: boolean;
+  showFavoriteButton?: boolean;
   onFavoriteToggle?: () => void;
   onCardClick?: () => void;
 };
@@ -23,6 +24,7 @@ export default function MovieCard({
   release_date,
   vote_average,
   favorite,
+  showFavoriteButton,
   onFavoriteToggle,
   onCardClick,
 }: MovieCardProps) {
@@ -74,20 +76,22 @@ export default function MovieCard({
           </div>
 
           {/* botão favoritar */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onFavoriteToggle?.();
-            }}
-            className="w-8 h-8 rounded-full border border-[#2a2a2a] flex items-center justify-center cursor-pointer hover:border-[#90D5FF] transition-colors"
-          >
-            <Heart
-              size={14}
-              className={
-                favorite ? "fill-[#90D5FF] text-[#90D5FF]" : "text-[#F2EFE3]"
-              }
-            />
-          </button>
+          {showFavoriteButton !== false && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onFavoriteToggle?.();
+              }}
+              className="w-8 h-8 rounded-full border border-[#2a2a2a] flex items-center justify-center cursor-pointer hover:border-[#90D5FF] transition-colors"
+            >
+              <Heart
+                size={14}
+                className={
+                  favorite ? "fill-[#90D5FF] text-[#90D5FF]" : "text-[#F2EFE3]"
+                }
+              />
+            </button>
+          )}
         </div>
       </div>
 

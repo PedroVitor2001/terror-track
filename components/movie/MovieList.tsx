@@ -8,9 +8,13 @@ import { useFavorites } from "@/lib/favorites-context";
 
 type MovieListProps = {
   movies: TMDBMovie[];
+  showFavoriteButton?: boolean;
 };
 
-export default function MovieList({ movies }: MovieListProps) {
+export default function MovieList({
+  movies,
+  showFavoriteButton,
+}: MovieListProps) {
   const { favorites, toggleFavorite } = useFavorites();
   const [selectedMovie, setSelectedMovie] = useState<TMDBMovie | null>(null);
 
@@ -26,6 +30,7 @@ export default function MovieList({ movies }: MovieListProps) {
             release_date={movie.release_date}
             vote_average={movie.vote_average}
             favorite={favorites.includes(movie.id)}
+            showFavoriteButton={showFavoriteButton}
             onFavoriteToggle={() => toggleFavorite(movie.id)}
             onCardClick={() => setSelectedMovie(movie)}
           />
